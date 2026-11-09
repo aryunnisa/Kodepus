@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kodepus membantu menemukan kos sesuai lokasi, harga, dan fasilitas.">
+    <title>Kodepus | Pencarian Kos & Kontrakan</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Header semantik dan navigasi utama -->
+    <header class="site-header">
+        <div class="container nav-container">
+            <a class="brand" href="#beranda" aria-label="Kodepus, ke halaman beranda">
+                kode<span>pus</span><span class="brand-dot">.</span>
+            </a>
+
+            <button
+                class="menu-toggle"
+                id="menu-toggle"
+                type="button"
+                aria-label="Buka menu navigasi"
+                aria-expanded="false"
+                aria-controls="primary-navigation">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="primary-navigation" id="primary-navigation" aria-label="Navigasi utama">
+                <a href="#beranda">Beranda</a>
+                <a href="#pencarian">Cari Kos</a>
+                <a href="#properti">Daftar Properti</a>
+                <a href="#tentang">Tentang</a>
+            </nav>
+
+            <a class="header-cta" href="#pencarian">Temukan Kos</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Bagian pengenalan proyek -->
+        <section class="hero" id="beranda">
+            <div class="container hero-content">
+                <p class="eyebrow">TEMUKAN TEMPAT TINGGAL IDEALMU</p>
+                <h1>Cari Kos Lebih Mudah,<br><span>Nyaman Tanpa Ribet.</span></h1>
+                <p class="hero-description">
+                    Temukan kos dan kontrakan sesuai kebutuhan, lokasi, dan anggaranmu
+                    melalui Kodepus.
+                </p>
+                <a class="button button-primary" href="#pencarian">Mulai Pencarian</a>
+            </div>
+            <div class="hero-shape" aria-hidden="true">
+                <div class="hero-card">
+                    <span class="hero-card-icon">⌂</span>
+                    <strong>Tempat nyaman</strong>
+                    <small>untuk cerita barumu</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form pencarian dengan validasi dan pesan aksesibel -->
+        <section class="search-section" id="pencarian" aria-labelledby="search-title">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">PENCARIAN PROPERTI</p>
+                    <h2 id="search-title">Temukan kos yang cocok</h2>
+                    <p>Atur filter di bawah untuk menemukan pilihan tempat tinggal.</p>
+                </div>
+
+                <form class="search-form" id="search-form" novalidate>
+                    <div class="field">
+                        <label for="location">Lokasi</label>
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            placeholder="Contoh: Tangerang"
+                            autocomplete="address-level2"
+                            aria-describedby="location-error">
+                        <small class="field-error" id="location-error" aria-live="polite"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="resident-type">Jenis penghuni</label>
+                        <select
+                            id="resident-type"
+                            name="residentType"
+                            aria-describedby="resident-type-error">
+                            <option value="">Semua jenis</option>
+                            <option value="putra">Putra</option>
+                            <option value="putri">Putri</option>
+                            <option value="campur">Campur</option>
+                        </select>
+                        <small class="field-error" id="resident-type-error" aria-live="polite"></small>
+                    </div>
+
+                    <div class="field">
+                        <label for="max-price">Harga maksimal per bulan</label>
+                        <select id="max-price" name="maxPrice" aria-describedby="max-price-error">
+                            <option value="">Semua harga</option>
+                            <option value="500000">Rp500.000</option>
+                            <option value="1000000">Rp1.000.000</option>
+                            <option value="1500000">Rp1.500.000</option>
+                            <option value="2000000">Rp2.000.000</option>
+                        </select>
+                        <small class="field-error" id="max-price-error" aria-live="polite"></small>
+                    </div>
+
+                    <fieldset class="facility-field">
+                        <legend>Fasilitas</legend>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="facility" value="wifi"> WiFi
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="facility" value="ac"> AC
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="facility" value="parking"> Parkir
+                        </label>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button class="button button-primary" type="submit">Cari Properti</button>
+                        <button class="button button-secondary" type="reset" id="reset-search">Reset</button>
+                    </div>
+                    <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- Kartu properti: data-id dipakai JavaScript untuk identifikasi properti -->
+        <section class="property-section" id="properti" aria-labelledby="property-title">
+            <div class="container">
+                <div class="section-heading section-heading-row">
+                    <div>
+                        <p class="eyebrow">PILIHAN KODEPUS</p>
+                        <h2 id="property-title">Properti rekomendasi</h2>
+                        <p>Pilihan tempat tinggal untuk berbagai kebutuhan.</p>
+                    </div>
+                    <p class="result-count" id="result-count" aria-live="polite">3 properti ditemukan</p>
+                </div>
+
+                <div class="property-grid" id="property-grid">
+                    <article class="property-card"
+                        data-id="kos-001"
+                        data-location="tangerang selatan"
+                        data-type="putri"
+                        data-price="850000"
+                        data-facilities="wifi ac">
+                        <div class="property-image image-one" role="img" aria-label="Ilustrasi interior kamar kos yang nyaman">
+                            <span class="verified-badge"><span aria-hidden="true">✓</span> Terverifikasi</span>
+                        </div>
+                        <div class="property-content">
+                            <p class="property-type">KOS PUTRI</p>
+                            <h3>Kos Melati Residence</h3>
+                            <p class="property-location">Tangerang Selatan</p>
+                            <p class="property-facilities">WiFi · AC · Kamar mandi dalam</p>
+                            <div class="property-bottom">
+                                <p class="property-price"><strong>Rp850.000</strong><span>/ bulan</span></p>
+                                <button class="save-button" type="button"
+                                    data-id="kos-001"
+                                    aria-label="Simpan Kos Melati Residence"
+                                    aria-pressed="false">♡ Simpan Kos</button>
+                            </div>
+                            <button class="contact-trigger" type="button" data-property="kos-001">
+                                Hubungi Pemilik
+                            </button>
+                        </div>
+                    </article>
+
+                    <article class="property-card"
+                        data-id="kos-002"
+                        data-location="jakarta selatan"
+                        data-type="putra"
+                        data-price="1200000"
+                        data-facilities="wifi ac parking">
+                        <div class="property-image image-two" role="img" aria-label="Ilustrasi kamar kos dengan interior modern">
+                            <span class="verified-badge"><span aria-hidden="true">✓</span> Terverifikasi</span>
+                        </div>
+                        <div class="property-content">
+                            <p class="property-type">KOS PUTRA</p>
+                            <h3>Kos Harmoni Residence</h3>
+                            <p class="property-location">Jakarta Selatan</p>
+                            <p class="property-facilities">WiFi · AC · Parkir</p>
+                            <div class="property-bottom">
+                                <p class="property-price"><strong>Rp1.200.000</strong><span>/ bulan</span></p>
+                                <button class="save-button" type="button"
+                                    data-id="kos-002"
+                                    aria-label="Simpan Kos Harmoni Residence"
+                                    aria-pressed="false">♡ Simpan Kos</button>
+                            </div>
+                            <button class="contact-trigger" type="button" data-property="kos-002">
+                                Hubungi Pemilik
+                            </button>
+                        </div>
+                    </article>
+
+                    <article class="property-card"
+                        data-id="kos-003"
+                        data-location="tangerang"
+                        data-type="campur"
+                        data-price="1800000"
+                        data-facilities="wifi parking">
+                        <div class="property-image image-three" role="img" aria-label="Ilustrasi hunian kontrakan sederhana">
+                            <span class="verified-badge"><span aria-hidden="true">✓</span> Terverifikasi</span>
+                        </div>
+                        <div class="property-content">
+                            <p class="property-type">KOS CAMPUR</p>
+                            <h3>Kos Garden House</h3>
+                            <p class="property-location">Tangerang</p>
+                            <p class="property-facilities">WiFi · Parkir · Dapur bersama</p>
+                            <div class="property-bottom">
+                                <p class="property-price"><strong>Rp1.800.000</strong><span>/ bulan</span></p>
+                                <button class="save-button" type="button"
+                                    data-id="kos-003"
+                                    aria-label="Simpan Kos Garden House"
+                                    aria-pressed="false">♡ Simpan Kos</button>
+                            </div>
+                            <button class="contact-trigger" type="button" data-property="kos-003">
+                                Hubungi Pemilik
+                            </button>
+                        </div>
+                    </article>
+                </div>
+
+                <p class="empty-state" id="empty-state" hidden>
+                    Properti tidak ditemukan. Coba ubah kata kunci atau filter pencarian.
+                </p>
+            </div>
+        </section>
+
+        <!-- CTA kontak. Nomor WhatsApp contoh perlu diganti dengan nomor pemilik sebenarnya. -->
+        <section class="contact-section" id="kontak" aria-labelledby="contact-title">
+            <div class="container contact-panel">
+                <div>
+                    <p class="eyebrow">BUTUH INFORMASI LEBIH LANJUT?</p>
+                    <h2 id="contact-title">Tertarik dengan properti ini?</h2>
+                    <p>Hubungi pemilik untuk menanyakan ketersediaan dan detail kos.</p>
+                </div>
+                <div class="contact-action">
+                    <button class="button button-contact" id="contact-owner" type="button"
+                        data-phone="6281234567890">
+                        Hubungi Pemilik
+                    </button>
+                    <p id="contact-status" class="contact-status" role="status" aria-live="polite"></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section" id="tentang">
+            <div class="container">
+                <p class="eyebrow">TENTANG KODEPUS</p>
+                <h2>Tempat tinggal yang tepat dimulai dari pencarian yang mudah.</h2>
+                <p>Kodepus adalah platform pencarian kos dan kontrakan yang membantu pengguna
+                    membandingkan pilihan berdasarkan lokasi, harga, jenis penghuni, dan fasilitas.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer semantik dengan tautan sekunder -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-about">
+                <a class="brand footer-brand" href="#beranda">kode<span>pus</span><span class="brand-dot">.</span></a>
+                <p>Platform pencarian kos dan kontrakan untuk membantu menemukan tempat tinggal
+                    yang sesuai kebutuhan.</p>
+            </div>
+
+            <div class="footer-links">
+                <h2>Navigasi</h2>
+                <a href="#beranda">Beranda</a>
+                <a href="#pencarian">Cari Kos</a>
+                <a href="#properti">Properti</a>
+                <a href="#tentang">Tentang Kami</a>
+            </div>
+
+            <div class="footer-links">
+                <h2>Informasi</h2>
+                <a href="#kontak">Hubungi Kami</a>
+                <a href="#pencarian">Bantuan Pencarian</a>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>© 2026 Kodepus. Seluruh hak cipta dilindungi.</p>
+            <a href="#beranda">Kembali ke atas ↑</a>
+        </div>
+    </footer>
+</body>
+</html>
